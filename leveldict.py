@@ -48,7 +48,7 @@ class LevelDict(MutableMapping):
     """LevelDB dict-style wrapper."""
 
     def __init__(self, db, **kwargs):
-        if isinstance(db, basestring):
+        if isinstance(db, (str, bytes)):
             db = leveldb.LevelDB(db, **kwargs)
         assert isinstance(db, leveldb.LevelDB), "db is not LevelDB instance"
         self._db = db
@@ -136,7 +136,7 @@ class LevelDictSerialized(LevelDict):
         # for convenience, allow unicode keys and serialize.
         # although, keys doesn't get converted back to unicode
         # when accessing them through .keys(), .items(), etc.
-        if isinstance(key, unicode):
+        if isinstance(key, str):
             key = key.encode('utf-8')
         return key
 
